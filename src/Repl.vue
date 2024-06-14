@@ -100,7 +100,13 @@ function reload() {
   outputRef.value?.reload()
 }
 
-defineExpose({ reload })
+function getSelectedText() {
+  const { store } = props
+  const selectionValue = store.state.activeFile.selectionCode
+  return selectionValue
+}
+
+defineExpose({ reload, getSelectedText })
 </script>
 
 <template>

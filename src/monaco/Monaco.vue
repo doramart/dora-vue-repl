@@ -32,6 +32,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{
   (e: 'change', value: string): void
+  (e: 'selection', value: string): void
 }>()
 
 const containerRef = ref<HTMLDivElement>()
@@ -143,6 +144,15 @@ onMounted(async () => {
 
   editorInstance.onDidChangeModelContent(() => {
     emit('change', editorInstance.getValue())
+  })
+
+  editorInstance.onDidChangeCursorSelection((e) => {
+    if (!editor.value) return ''
+    const model = editor.value.getModel()
+    const selection = editor.value.getSelection() // 获取当前选区
+    const selectValue =
+      model && selection ? model.getValueInRange(selection) : '' // 获取选区内的文本
+    emit('selection', selectValue)
   })
 
   // update theme

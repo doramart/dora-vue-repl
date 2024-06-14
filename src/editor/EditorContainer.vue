@@ -20,6 +20,10 @@ const onChange = debounce((code: string) => {
   store.state.activeFile.code = code
 }, 250)
 
+const onSelection = debounce((code: string) => {
+  store.state.activeFile.selectionCode = code
+}, 250)
+
 function setItem() {
   localStorage.setItem(SHOW_ERROR_KEY, showMessage.value ? 'true' : 'false')
 }
@@ -41,6 +45,7 @@ watch(showMessage, () => {
       :value="store.state.activeFile.code"
       :filename="store.state.activeFile.filename"
       @change="onChange"
+      @selection="onSelection"
     />
     <Message v-show="showMessage" :err="store.state.errors[0]" />
     <MessageToggle v-model="showMessage" />

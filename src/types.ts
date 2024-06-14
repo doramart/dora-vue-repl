@@ -9,6 +9,7 @@ export interface EditorProps {
 }
 export interface EditorEmits {
   (e: 'change', code: string): void
+  (e: 'selection', code: string): void
 }
 export type EditorComponentType = Component<EditorProps>
 

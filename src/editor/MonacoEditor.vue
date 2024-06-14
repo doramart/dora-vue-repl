@@ -12,6 +12,9 @@ defineOptions({
 const onChange = (code: string) => {
   emit('change', code)
 }
+const onSelection = (code: string) => {
+  emit('selection', code)
+}
 </script>
 
 <template>
@@ -21,5 +24,6 @@ const onChange = (code: string) => {
     :readonly="readonly"
     :mode="mode"
     @change="onChange"
+    @selection="onSelection"
   />
 </template>

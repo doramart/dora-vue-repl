@@ -35,6 +35,7 @@ const tsconfig = {
 export class File {
   filename: string
   code: string
+  selectionCode?: string
   hidden: boolean
   compiled = {
     js: '',

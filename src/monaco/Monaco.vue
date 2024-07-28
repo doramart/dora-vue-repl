@@ -33,6 +33,7 @@ const props = withDefaults(
 const emit = defineEmits<{
   (e: 'change', value: string): void
   (e: 'selection', value: string): void
+  (e: 'codeSelected', value: object): void
 }>()
 
 const containerRef = ref<HTMLDivElement>()
@@ -160,6 +161,18 @@ onMounted(async () => {
     editorInstance.updateOptions({
       theme: n === 'light' ? theme.light : theme.dark,
     })
+  })
+
+  // 监听鼠标选中事件
+  editorInstance.onMouseUp((event) => {
+    if (!editor.value) return ''
+    const model = editor.value.getModel()
+    const selection = editor.value.getSelection() // 获取当前选区
+    if (model && selection) {
+      const selectValue =
+        model && selection ? model.getValueInRange(selection) : ''
+      emit('codeSelected', { value: selectValue, selection })
+    }
   })
 })
 

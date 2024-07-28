@@ -36,6 +36,7 @@ export class File {
   filename: string
   code: string
   selectionCode?: string
+  selectedCode?: object
   hidden: boolean
   compiled = {
     js: '',

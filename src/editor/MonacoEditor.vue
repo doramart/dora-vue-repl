@@ -15,6 +15,9 @@ const onChange = (code: string) => {
 const onSelection = (code: string) => {
   emit('selection', code)
 }
+const onCodeSelecte = (codeInfo: object) => {
+  emit('codeSelected', codeInfo)
+}
 </script>
 
 <template>
@@ -25,5 +28,6 @@ const onSelection = (code: string) => {
     :mode="mode"
     @change="onChange"
     @selection="onSelection"
+    @codeSelected="onCodeSelecte"
   />
 </template>

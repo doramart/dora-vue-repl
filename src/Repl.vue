@@ -2,10 +2,10 @@
 import SplitPane from './SplitPane.vue'
 import Output from './output/Output.vue'
 import { ReplStore, type SFCOptions, type Store } from './store'
-import { computed, provide, ref, toRef, watchEffect } from 'vue'
-import type { EditorComponentType } from './types'
+import { computed, provide, ref, toRef, watchEffect, watch } from 'vue'
+import type { EditorComponentType, EditorEmits } from './types'
 import EditorContainer from './editor/EditorContainer.vue'
-
+const emit = defineEmits<EditorEmits>()
 export interface Props {
   theme?: 'dark' | 'light'
   editor: EditorComponentType
@@ -21,6 +21,7 @@ export interface Props {
   layout?: 'horizontal' | 'vertical'
   layoutReverse?: boolean
   ssr?: boolean
+  selectedCallback?: (value: any) => {}
   previewOptions?: {
     headHTML?: string
     bodyHTML?: string
@@ -62,6 +63,16 @@ if (!props.editor) {
 }
 
 const outputRef = ref<InstanceType<typeof Output>>()
+
+// 是否代码被选中
+watch(
+  () => props.store.state.activeFile.selectedCode,
+  (val: any) => {
+    if (props.selectedCallback) {
+      props.selectedCallback(val)
+    }
+  },
+)
 
 watchEffect(() => {
   const { store } = props
